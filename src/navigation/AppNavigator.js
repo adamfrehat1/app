@@ -13,6 +13,9 @@ import RegisterScreen from '../screens/RegisterScreen';
 import HomeScreen from '../screens/HomeScreen';
 import AddProductScreen from '../screens/AddProductScreen';
 import ProductDetailsScreen from '../screens/ProductDetailsScreen';
+import ProductListScreen from '../screens/ProductListScreen';
+import CartScreen from '../screens/CartScreen';
+import OrdersScreen from '../screens/OrdersScreen';
 import ChatScreen from '../screens/ChatScreen';
 import ExpertBookingScreen from '../screens/ExpertBookingScreen';
 import FeedbackScreen from '../screens/FeedbackScreen';
@@ -67,12 +70,22 @@ function TabNavigator() {
         }}
       />
       <Tab.Screen
-        name="Feedback"
-        component={FeedbackScreen}
+        name="Cart"
+        component={CartScreen}
         options={{
-          tabBarLabel: 'الملاحظات',
+          tabBarLabel: 'السلة',
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="message-alert" size={size} color={color} />
+            <MaterialCommunityIcons name="cart" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Orders"
+        component={OrdersScreen}
+        options={{
+          tabBarLabel: 'الطلبات',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="package-variant" size={size} color={color} />
           ),
         }}
       />
@@ -152,11 +165,26 @@ function AppNavigator() {
               options={{ title: 'تفاصيل المنتج' }}
             />
             <Stack.Screen 
+              name="ProductList" 
+              component={ProductListScreen}
+              options={{ title: 'قائمة المنتجات' }}
+            />
+            <Stack.Screen 
               name="Chat" 
               component={ChatScreen}
               options={({ route }) => ({ 
                 title: route.params?.sellerName || 'المحادثة'
               })}
+            />
+            <Stack.Screen 
+              name="ExpertBooking" 
+              component={ExpertBookingScreen}
+              options={{ title: 'حجز خبير' }}
+            />
+            <Stack.Screen 
+              name="Feedback" 
+              component={FeedbackScreen}
+              options={{ title: 'الملاحظات والشكاوى' }}
             />
           </>
         )}
