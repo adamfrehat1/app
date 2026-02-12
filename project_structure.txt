@@ -1,0 +1,55 @@
+.
+├── assets
+│   ├── adaptive-icon.png
+│   ├── favicon.png
+│   ├── icon.png
+│   └── splash.png
+├── src
+│   ├── components
+│   │   ├── LoadingScreen.js
+│   │   └── ProductCard.js
+│   ├── config
+│   │   └── firebase.js
+│   ├── contexts
+│   │   ├── AuthContext.js
+│   │   └── CartContext.js
+│   ├── navigation
+│   │   └── AppNavigator.js
+│   ├── screens
+│   │   ├── AddProductScreen.js
+│   │   ├── CartScreen.js
+│   │   ├── ChatScreen.js
+│   │   ├── ExpertBookingScreen.js
+│   │   ├── FeedbackScreen.js
+│   │   ├── HomeScreen.js
+│   │   ├── LoginScreen.js
+│   │   ├── OrdersScreen.js
+│   │   ├── ProductDetailsScreen.js
+│   │   ├── ProductListScreen.js
+│   │   ├── ProfileScreen.js
+│   │   └── RegisterScreen.js
+│   ├── services
+│   │   ├── authService.js
+│   │   └── productService.js
+│   └── utils
+│       ├── constants.js
+│       └── theme.js
+├── App.js
+├── FEATURES.md
+├── FIREBASE_SETUP.md
+├── INSTALLATION_TEST.md
+├── PROJECT_STRUCTURE.md
+├── QUICKSTART.md
+├── README.md
+├── SUMMARY.txt
+├── TESTING.md
+├── TROUBLESHOOTING.md
+├── UPGRADE_SUMMARY.md
+├── app.json
+├── babel.config.js
+├── package-lock.json
+├── package.json
+├── project_structure.txt
+└── validate.sh
+
+10 directories, 43 files

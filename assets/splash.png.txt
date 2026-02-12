@@ -1,2 +1,0 @@
-This is a placeholder for the splash screen (1284x2778 PNG).
-In a real project, replace this with an actual PNG image file.

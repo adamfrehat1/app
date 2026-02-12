@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "مشتل - سوق المنتجات الزراعية",
+    "name": "Mashtl",
     "slug": "mashtl-app",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "automatic",
+    "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -37,15 +37,15 @@
     },
     "plugins": [
       [
-        "expo-location",
+        "expo-image-picker",
         {
-          "locationAlwaysAndWhenInUsePermission": "السماح لتطبيق مشتل باستخدام الموقع الجغرافي."
+          "photosPermission": "The app needs access to your photos to upload product images."
         }
       ],
       [
-        "expo-image-picker",
+        "expo-location",
         {
-          "photosPermission": "السماح لتطبيق مشتل بالوصول إلى الصور."
+          "locationAlwaysAndWhenInUsePermission": "Allow Mashtl to use your location to show nearby products."
         }
       ]
     ]
