@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, FlatList, I18nManager } from 'react-native';
 import { Text, Card, Button, Searchbar, Chip, useTheme } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useCart } from '../contexts/CartContext';
 
 // تفعيل RTL
 I18nManager.allowRTL(true);
@@ -9,6 +10,7 @@ I18nManager.forceRTL(true);
 
 export default function ProductListScreen({ navigation, route }) {
   const theme = useTheme();
+  const { addToCart } = useCart();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [sortBy, setSortBy] = useState('date');
@@ -95,7 +97,7 @@ export default function ProductListScreen({ navigation, route }) {
         <Button
           mode="contained"
           icon="cart-plus"
-          onPress={() => console.log('Add to cart:', item.id)}
+          onPress={() => addToCart(item, 1)}
         >
           أضف إلى السلة
         </Button>

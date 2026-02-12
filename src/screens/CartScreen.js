@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, FlatList, I18nManager } from 'react-native';
 import { Text, Card, Button, IconButton, Divider, useTheme } from 'react-native-paper';
+import { useCart } from '../contexts/CartContext';
 
 // تفعيل RTL
 I18nManager.allowRTL(true);
@@ -8,50 +9,22 @@ I18nManager.forceRTL(true);
 
 export default function CartScreen({ navigation }) {
   const theme = useTheme();
-  const [cartItems, setCartItems] = useState([
-    {
-      id: '1',
-      name: 'شجرة زيتون',
-      price: 150,
-      quantity: 2,
-      image: 'https://via.placeholder.com/100',
-      seller: 'محمد أحمد',
-    },
-    {
-      id: '2',
-      name: 'بذور طماطم',
-      price: 25,
-      quantity: 5,
-      image: 'https://via.placeholder.com/100',
-      seller: 'فاطمة علي',
-    },
-    {
-      id: '3',
-      name: 'سماد عضوي',
-      price: 80,
-      quantity: 1,
-      image: 'https://via.placeholder.com/100',
-      seller: 'أحمد خالد',
-    },
-  ]);
+  const { cartItems, updateQuantity, removeFromCart, clearCart, getTotalPrice } = useCart();
 
-  const updateQuantity = (id, delta) => {
-    setCartItems(prevItems =>
-      prevItems.map(item => {
-        if (item.id === id) {
-          const newQuantity = Math.max(1, item.quantity + delta);
-          return { ...item, quantity: newQuantity };
-        }
-        return item;
-      })
-    );
+  const handleUpdateQuantity = (id, delta) => {
+    const item = cartItems.find(item => item.id === id);
+    if (item) {
+      updateQuantity(id, item.quantity + delta);
+    }
   };
 
-  const removeItem = (id) => {
-    setCartItems(prevItems => prevItems.filter(item => item.id !== id));
+  const handleCheckout = () => {
+    // Navigate to orders or create order
+    navigation.navigate('Orders');
+    clearCart();
   };
 
-  const totalPrice = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const totalPrice = getTotalPrice();
 
   const renderCartItem = ({ item }) => (
     <Card style={styles.cartItem}>
@@ -68,14 +41,14 @@ export default function CartScreen({ navigation }) {
             <IconButton
               icon="minus"
               size={20}
-              onPress={() => updateQuantity(item.id, -1)}
+              onPress={() => handleUpdateQuantity(item.id, -1)}
               disabled={item.quantity <= 1}
             />
             <Text variant="titleMedium" style={styles.quantity}>{item.quantity}</Text>
             <IconButton
               icon="plus"
               size={20}
-              onPress={() => updateQuantity(item.id, 1)}
+              onPress={() => handleUpdateQuantity(item.id, 1)}
             />
           </View>
         </View>
@@ -84,7 +57,7 @@ export default function CartScreen({ navigation }) {
           icon="delete"
           size={24}
           iconColor={theme.colors.error}
-          onPress={() => removeItem(item.id)}
+          onPress={() => removeFromCart(item.id)}
           style={styles.deleteButton}
         />
       </View>
@@ -139,12 +112,7 @@ export default function CartScreen({ navigation }) {
             <Button
               mode="contained"
               icon="cart-check"
-              onPress={() => {
-                console.log('Checkout:', cartItems);
-                // TODO: Navigate to checkout or orders
-                alert('تم إتمام الطلب بنجاح!');
-                setCartItems([]);
-              }}
+              onPress={handleCheckout}
               style={styles.checkoutButton}
             >
               إتمام الطلب

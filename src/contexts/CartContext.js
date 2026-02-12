@@ -5,16 +5,19 @@ const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
+  const [isInitialized, setIsInitialized] = useState(false);
 
   // Load cart from storage on mount
   useEffect(() => {
     loadCart();
   }, []);
 
-  // Save cart to storage whenever it changes
+  // Save cart to storage whenever it changes (but not on initial load)
   useEffect(() => {
-    saveCart();
-  }, [cartItems]);
+    if (isInitialized) {
+      saveCart();
+    }
+  }, [cartItems, isInitialized]);
 
   const loadCart = async () => {
     try {
@@ -24,6 +27,8 @@ export const CartProvider = ({ children }) => {
       }
     } catch (error) {
       console.error('Error loading cart:', error);
+    } finally {
+      setIsInitialized(true);
     }
   };
 

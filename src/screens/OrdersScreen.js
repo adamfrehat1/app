@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, StyleSheet, FlatList, I18nManager } from 'react-native';
 import { Text, Card, Chip, Button, useTheme } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useCart } from '../contexts/CartContext';
 
 // تفعيل RTL
 I18nManager.allowRTL(true);
@@ -9,6 +10,7 @@ I18nManager.forceRTL(true);
 
 export default function OrdersScreen({ navigation }) {
   const theme = useTheme();
+  const { addToCart } = useCart();
   const [orders, setOrders] = useState([
     {
       id: '1',
@@ -111,21 +113,21 @@ export default function OrdersScreen({ navigation }) {
         </Card.Content>
 
         <Card.Actions>
-          <Button
-            mode="outlined"
-            onPress={() => {
-              console.log('View order details:', item.id);
-              // TODO: Navigate to order details screen
-            }}
-          >
-            عرض التفاصيل
-          </Button>
           {item.status === 'delivered' && (
             <Button
               mode="contained"
               onPress={() => {
-                console.log('Reorder:', item.id);
-                // TODO: Implement reorder functionality
+                // Add all items from the order back to cart
+                item.items.forEach(product => {
+                  addToCart({
+                    id: `${item.id}-${product.name}`,
+                    name: product.name,
+                    price: product.price,
+                    seller: item.seller,
+                    image: 'https://via.placeholder.com/100',
+                  }, product.quantity);
+                });
+                navigation.navigate('Cart');
               }}
             >
               إعادة الطلب
@@ -136,8 +138,6 @@ export default function OrdersScreen({ navigation }) {
               mode="text"
               textColor={theme.colors.error}
               onPress={() => {
-                console.log('Cancel order:', item.id);
-                // TODO: Implement cancel order
                 setOrders(prevOrders =>
                   prevOrders.map(order =>
                     order.id === item.id ? { ...order, status: 'cancelled' } : order
